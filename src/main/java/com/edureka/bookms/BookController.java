@@ -35,8 +35,23 @@ public class BookController{
 
 
     @GetMapping("/book/{id}")
-    public ResponseEntity<Optional<Book>> getBookById(@PathVariable Integer id){
-        return ResponseEntity.ok(bookService.getBookId(id));
+    public boolean getBookById(@PathVariable Integer id){
+        int issuedCopies = 0;
+        int totalCopies=0;
+        int availableCopies = 0;
+      Book bookDetails =  bookService.getBookId(id).stream().findAny().orElse(null);
+      if(bookDetails !=null){
+          issuedCopies = bookDetails.getIssuedCopies();
+          totalCopies = bookDetails.getTotalCopies();
+           availableCopies=totalCopies-issuedCopies;
+      }
+      if (availableCopies !=0){
+          issuedCopies +=1;
+          bookDetails.setIssuedCopies(issuedCopies);
+          bookService.updateBoook(bookDetails);
+          return true;
+      }
+        return false;
     }
 
     @PutMapping("/book/{id}")
