@@ -19,8 +19,19 @@ public class Book {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date publishedDate;
 
+    public Integer getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public void setAvailableCopies(Integer availableCopies) {
+        this.availableCopies = availableCopies;
+    }
+
     private Integer totalCopies;
+
     private Integer issuedCopies;
+
+    private Integer availableCopies;
 
     private String  author;
 

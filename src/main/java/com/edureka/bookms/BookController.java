@@ -43,11 +43,15 @@ public class BookController{
       if(bookDetails !=null){
           issuedCopies = bookDetails.getIssuedCopies();
           totalCopies = bookDetails.getTotalCopies();
-           availableCopies=totalCopies-issuedCopies;
+          //availableCopies = bookDetails.getAvailableCopies();
+          availableCopies=totalCopies-issuedCopies;
       }
       if (availableCopies !=0){
           issuedCopies +=1;
+          availableCopies = totalCopies-issuedCopies;
           bookDetails.setIssuedCopies(issuedCopies);
+          bookDetails.setAvailableCopies(availableCopies);
+
           bookService.updateBoook(bookDetails);
           return true;
       }
